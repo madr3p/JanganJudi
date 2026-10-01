@@ -1,0 +1,44 @@
+# Unity generated files
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+UserSettings/
+
+# Memory captures
+memorycaptures/
+
+# IDE files
+.vs/
+.vscode/
+.idea/
+
+# Visual Studio
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Unity cache
+sysinfo.txt
+
+# Builds
+*.apk
+*.aab
+*.exe
+*.app
+*.zip
+
+# Firebase
+google-services.json
+GoogleService-Info.plist

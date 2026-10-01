@@ -1,0 +1,15 @@
+# Unity
+*.cs text
+*.shader text
+*.json text
+*.meta text
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.psd binary
+*.fbx binary
+*.prefab binary
+*.unity binary
+*.asset binary
