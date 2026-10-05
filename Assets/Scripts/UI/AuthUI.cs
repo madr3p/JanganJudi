@@ -3,26 +3,77 @@ using TMPro;
 
 public class AuthUI : MonoBehaviour
 {
-    [SerializeField] private TMP_InputField usernameInput;
-    [SerializeField] private TMP_InputField emailInput;
-    [SerializeField] private TMP_InputField passwordInput;
-    [SerializeField] private TMP_Text statusText;
+    [Header("Login")]
+    [SerializeField] private TMP_InputField loginUsernameInput;
+    [SerializeField] private TMP_InputField loginPasswordInput;
+    [SerializeField] private TMP_Text loginStatusText;
+
+    [Header("Register")]
+    [SerializeField] private TMP_InputField registerUsernameInput;
+    [SerializeField] private TMP_InputField registerEmailInput;
+    [SerializeField] private TMP_InputField registerPasswordInput;
+    [SerializeField] private TMP_Text registerStatusText;
+
+public async void Login()
+{
+    string username = loginUsernameInput.text.Trim();
+    string password = loginPasswordInput.text;
+
+    if (string.IsNullOrEmpty(username) ||
+        string.IsNullOrEmpty(password))
+    {
+        loginStatusText.text =
+            "Please fill in all fields.";
+
+        return;
+    }
+
+    loginStatusText.text =
+        "Logging in...";
+
+    bool success =
+        await AuthManager.Instance.Login(
+            username,
+            password
+        );
+
+    if (success)
+    {
+        loginStatusText.text =
+            "Login successful.";
+
+        Debug.Log(
+            "WELCOME " +
+            PlayerManager.Instance.Username
+        );
+
+        Debug.Log(
+            "BALANCE: RM" +
+            PlayerManager.Instance.Balance
+        );
+    }
+    else
+    {
+        loginStatusText.text =
+            "Login failed.";
+    }
+}
 
     public async void Register()
     {
-        string username = usernameInput.text.Trim();
-        string email = emailInput.text.Trim();
-        string password = passwordInput.text;
+        string username = registerUsernameInput.text.Trim();
+        string email = registerEmailInput.text.Trim();
+        string password = registerPasswordInput.text;
 
         if (string.IsNullOrEmpty(username) ||
             string.IsNullOrEmpty(email) ||
             string.IsNullOrEmpty(password))
         {
-            statusText.text = "Please fill in all fields.";
+            registerStatusText.text = "Please fill in all fields.";
             return;
         }
 
-        statusText.text = "Registering...";
+        registerStatusText.text = "Registering...";
 
         bool success = await AuthManager.Instance.Register(
             email,
@@ -30,38 +81,8 @@ public class AuthUI : MonoBehaviour
             username
         );
 
-        statusText.text = success
+        registerStatusText.text = success
             ? "Registration successful."
             : "Registration failed.";
-    }
-
-    public async void Login()
-    {
-        string email = emailInput.text.Trim();
-        string password = passwordInput.text;
-
-        if (string.IsNullOrEmpty(email) ||
-            string.IsNullOrEmpty(password))
-        {
-            statusText.text = "Please enter email and password.";
-            return;
-        }
-
-        statusText.text = "Logging in...";
-
-        bool success = await AuthManager.Instance.Login(
-            email,
-            password
-        );
-
-        if (success)
-        {
-            await PlayerManager.Instance.LoadPlayer();
-            statusText.text = "Login successful.";
-        }
-        else
-        {
-            statusText.text = "Login failed.";
-        }
     }
 }
